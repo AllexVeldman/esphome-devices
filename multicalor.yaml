@@ -1,0 +1,29 @@
+substitutions:
+  name: "multicalor"
+  friendly_name: "Multicalor Ventilation"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+
+  project:
+    name: allexveldman.${name}
+    version: "0.2"
+
+dashboard_import:
+  package_import_url: github://AllexVeldman/esphome-devices/multicalor.yaml@main
+  import_full_config: false
+
+packages:
+  multicalor:
+    url: https://github.com/AllexVeldman/esphome-multicalor
+    ref: main
+    file: multicalor.yaml
+    username: !secret git_username
+    password: !secret git_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
