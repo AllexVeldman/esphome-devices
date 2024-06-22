@@ -30,3 +30,6 @@ wifi:
 api:
   encryption:
     key: !secret api_encr_key
+
+ota:
+  platform: esphome
