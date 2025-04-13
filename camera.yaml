@@ -1,0 +1,109 @@
+substitutions:
+  name: "front-door-camera"
+  friendly_name: "Front Door Camera"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+
+  project:
+    name: allexveldman.${name}
+    version: "0.1"
+
+
+dashboard_import:
+  package_import_url: github://AllexVeldman/esphome-devices/camera.yaml
+  import_full_config: false
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: info
+  # Disable UART logging
+  baud_rate: 0
+
+# Enable Home Assistant API
+wifi:
+  # Set up a wifi access point
+  ap:
+    ssid: ${name}
+    password: "12345678"
+# In combination with the `ap` this allows the user
+# to provision wifi credentials to the device.
+captive_portal:
+
+api:
+
+ota:
+  platform: esphome
+
+# The Board I'm using does not have PSRAM
+# My fork changes the esp32_camera component to use DRAM instead
+external_components:
+  - source:
+      type: git
+      url: https://github.com/AllexVeldman/esphome
+    components: [ esp32_camera ]
+
+esp32_camera_web_server:
+  - port: 8080
+    mode: stream
+
+esp32_camera:
+
+  name: "Front Door"
+
+  external_clock:
+    pin: GPIO15
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO4
+    scl: GPIO5
+  data_pins:
+    - GPIO11
+    - GPIO9
+    - GPIO8
+    - GPIO10
+    - GPIO12
+    - GPIO18
+    - GPIO17
+    - GPIO16
+  vsync_pin: GPIO6
+  href_pin: GPIO7
+  pixel_clock_pin: GPIO13
+
+  # resolution: "800x600"
+  saturation: -1
+
+sensor:
+    # -- Wifi Signal dB
+  - platform: wifi_signal
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: uptime
+    name: "Uptime"
+    entity_category: "diagnostic"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      entity_category: "diagnostic"
+    ssid:
+      name: "Wi-Fi SSID"
+      entity_category: "diagnostic"
+    bssid:
+      name: "Wi-Fi BSSID"
+      entity_category: "diagnostic"
+  - platform: version
+    name: "ESPHome Version"
+    hide_timestamp: true
+    entity_category: "diagnostic"
