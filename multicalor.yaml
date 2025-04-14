@@ -24,12 +24,11 @@ packages:
     password: !secret git_password
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+  ap:
+    ssid: ${name}
+    password: "12345678"
 
 api:
-  encryption:
-    key: !secret api_encr_key
 
 ota:
   platform: esphome

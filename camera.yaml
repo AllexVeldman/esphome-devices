@@ -11,7 +11,6 @@ esphome:
     name: allexveldman.${name}
     version: "0.1"
 
-
 dashboard_import:
   package_import_url: github://AllexVeldman/esphome-devices/camera.yaml
   import_full_config: false
@@ -25,7 +24,7 @@ esp32:
 logger:
   level: info
   # Disable UART logging
-  baud_rate: 0
+  # baud_rate: 0
 
 # Enable Home Assistant API
 wifi:
@@ -55,7 +54,6 @@ esp32_camera_web_server:
     mode: stream
 
 esp32_camera:
-
   name: "Front Door"
 
   external_clock:
