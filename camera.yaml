@@ -86,11 +86,13 @@ switch:
     optimistic: true
     turn_on_action:
       - lambda: |-
+          ESP_LOGD("camera-action", "Turning On");
           esphome::esp32_camera::ESP32Camera* cam = id(camera);
           cam->set_horizontal_mirror(true);
           cam->update_camera_parameters();
     turn_off_action:
       - lambda: |-
+          ESP_LOGD("camera-action", "Turning Off");
           esphome::esp32_camera::ESP32Camera* cam = id(camera);
           cam->set_horizontal_mirror(false);
           cam->update_camera_parameters();
