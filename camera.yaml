@@ -1,6 +1,6 @@
 substitutions:
-  name: "front-door-camera"
-  friendly_name: "Front Door Camera"
+  name: "camera"
+  friendly_name: "Camera"
 
 esphome:
   name: ${name}
@@ -49,12 +49,13 @@ external_components:
       url: https://github.com/AllexVeldman/esphome
     components: [ esp32_camera ]
 
-esp32_camera_web_server:
-  - port: 8080
-    mode: stream
+# esp32_camera_web_server:
+#   - port: 8080
+#     mode: stream
 
 esp32_camera:
-  name: "Front Door"
+  name: ${friendly_name}
+  id: camera
 
   external_clock:
     pin: GPIO15
@@ -77,6 +78,17 @@ esp32_camera:
 
   # resolution: "800x600"
   saturation: -1
+
+switch:
+  - platform: template
+    name: "Horizontal Mirror"
+    id: mirror_switch
+    turn_on_action:
+      - lambda: |-
+          id(camera).set_horizontal_mirror(true);
+    turn_off_action:
+      - lambda: |-
+          id(camera).set_horizontal_mirror(false);
 
 sensor:
     # -- Wifi Signal dB
