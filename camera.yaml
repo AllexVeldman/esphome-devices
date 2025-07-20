@@ -41,14 +41,6 @@ api:
 ota:
   platform: esphome
 
-# The Board I'm using does not have PSRAM
-# My fork changes the esp32_camera component to use DRAM instead
-external_components:
-  - source:
-      type: git
-      url: https://github.com/AllexVeldman/esphome
-    components: [ esp32_camera ]
-
 # esp32_camera_web_server:
 #   - port: 8080
 #     mode: stream
@@ -75,6 +67,9 @@ esp32_camera:
   vsync_pin: GPIO6
   href_pin: GPIO7
   pixel_clock_pin: GPIO13
+
+  # My board does not have PSRAM
+  frame_buffer_location: DRAM
 
   # resolution: "800x600"
   saturation: -1
