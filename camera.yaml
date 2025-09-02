@@ -47,7 +47,7 @@ ota:
 
 esp32_camera:
   name: ${friendly_name}
-  id: camera
+  id: cam
 
   external_clock:
     pin: GPIO15
